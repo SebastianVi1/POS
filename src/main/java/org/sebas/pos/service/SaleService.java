@@ -2,6 +2,7 @@ package org.sebas.pos.service;
 
 import org.sebas.pos.exception.CartEmptyExcepcion;
 import org.sebas.pos.exception.NoStockException;
+import org.sebas.pos.exception.ResourceNotFoundException;
 import org.sebas.pos.model.PAYMENT;
 import org.sebas.pos.model.Product;
 import org.sebas.pos.model.SaleItem;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -104,5 +106,15 @@ public class SaleService {
 
     public List<Sales> getSalesHistory() {
         return salesRepo.findAll();
+    }
+
+    public Sales getSaleTicket(Long id) {
+
+
+        Optional<Sales> salesOptional = salesRepo.findById(id);
+        if (salesOptional.isEmpty()) {
+            throw new ResourceNotFoundException("The sale is not in the database");
+        }
+        return salesOptional.get();
     }
 }

@@ -28,4 +28,10 @@ public class SaleController {
         List<Sales> sales = saleService.getSalesHistory();
         return new ResponseEntity<>(sales, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSaleTicket(@PathVariable Long id){
+        Sales sale = saleService.getSaleTicket(id);
+        return new ResponseEntity<Sales>(sale, HttpStatus.OK);
+    }
 }
