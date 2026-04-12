@@ -73,13 +73,17 @@ public class ProductService {
         return productMapper.toDto(finalProduct);
     }
 
-    public ProductDto findProductById(UUID id) {
-        Optional<Product> productOptional = productRepo.findById(id);
-        if (productOptional.isEmpty()){
-            throw new ResourceNotFoundException("Product with id '" + id + "' not found");
-        }
+    public Product updateEasyProduct(Product product){
+         return productRepo.save(product);
+    }
 
-        return productMapper.toDto(productOptional.get());
+    public ProductDto findProductById(UUID id) {
+        return productMapper.toDto(findEntityById(id));
+    }
+    // Internal use
+    public Product findEntityById(UUID id ){
+        return productRepo.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Product not found"));
     }
 
     public List<Product> getAllProducts(){
@@ -87,3 +91,4 @@ public class ProductService {
     }
 
 }
+

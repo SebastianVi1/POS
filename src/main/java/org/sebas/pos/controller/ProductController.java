@@ -15,7 +15,7 @@ import java.util.UUID;
 import java.util.List;
 
 @RestController()
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable UUID id){
+    public ResponseEntity<ProductDto> findProductById(@PathVariable UUID id){
         return ResponseEntity.ok(productService.findProductById(id));
     }
 

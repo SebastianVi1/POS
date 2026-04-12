@@ -1,9 +1,6 @@
 package org.sebas.pos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Builder
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,10 +28,10 @@ public class Product {
     private BigDecimal price;
 
     @Setter
-    private int stock;
+    private Integer stock = 0;
 
     @Setter
-    private int minStock;
+    private Integer minStock;
 
 
 }
