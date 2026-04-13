@@ -95,7 +95,7 @@ public class SaleService {
         sale.setTotalProducts(totalProducts);
 
         // apply IVA
-        BigDecimal ivaPercent = BigDecimal.valueOf(sale.getIvaPorcentage()).divide(BigDecimal.valueOf(100));
+        BigDecimal ivaPercent = BigDecimal.valueOf(sale.getIvaPercentage()).divide(BigDecimal.valueOf(100));
         BigDecimal totalWithIva = totalPrice.multiply(BigDecimal.ONE.add(ivaPercent));
         sale.setTotalPrice(totalWithIva);
 

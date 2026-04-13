@@ -1,5 +1,6 @@
 package org.sebas.pos.controller;
 
+import jakarta.validation.Valid;
 import org.sebas.pos.dto.ProductDto;
 import org.sebas.pos.model.Product;
 import org.sebas.pos.service.ProductService;
@@ -22,7 +23,7 @@ public class ProductController {
 
 
     @PostMapping()
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product){
         Product result = productService.createProduct(product);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -46,8 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID id, @RequestBody ProductDto product){
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID id, @RequestBody @Valid ProductDto product){
         return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.CREATED);
-
     }
 }

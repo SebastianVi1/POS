@@ -2,6 +2,7 @@ package org.sebas.pos.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,12 +39,14 @@ public class Sales {
 
 
     @Setter
+    @NotNull(message = "Total price cannot be null")
     private BigDecimal totalPrice;
 
     @Setter
+    @NotNull(message = "Total products cannot be null")
     private Integer totalProducts;
 
     @Setter
-    private Integer ivaPorcentage = 16;
+    private Integer ivaPercentage = 16;
 
 }

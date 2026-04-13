@@ -15,12 +15,3 @@ public class PosApplication {
 
 }
 
-@RestController("/")
- class Controller {
-
-    @GetMapping("/helloWorld")
-    public String helloWorld(){
-        return "<h1>Hello World from Springboot<h1>";
-
-    }
-}
