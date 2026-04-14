@@ -15,13 +15,17 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
     @Autowired
-    MyUserDetailsService myUserDetailsService;
+    private MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
@@ -30,10 +34,11 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable) //disable formLogin
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/register")
+                        .requestMatchers("/api/auth/login", "/register")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
