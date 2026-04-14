@@ -1,28 +1,25 @@
 package org.sebas.pos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Getter @Builder
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
+    @Setter
     private String username;
 
+    @Setter
     private String password;
 
-    private boolean active;
+    @Setter @Enumerated(EnumType.STRING)
+    private ROLE role;
 
 }

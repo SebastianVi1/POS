@@ -12,7 +12,6 @@ import java.lang.Integer;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "SaleItems")
 public class SaleItem {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

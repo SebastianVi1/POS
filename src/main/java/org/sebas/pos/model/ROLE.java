@@ -1,5 +1,9 @@
 package org.sebas.pos.model;
 
-public enum ROLE {
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
+public enum ROLE {
+    ROLE_USER,
+    ROLE_ADMIN
 }
