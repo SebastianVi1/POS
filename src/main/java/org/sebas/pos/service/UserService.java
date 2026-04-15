@@ -42,4 +42,7 @@ public class UserService {
 
     }
 
+    public Users getUserByUsername(String username){
+        return userRepo.getUsersByUsername(username);
+    }
 }

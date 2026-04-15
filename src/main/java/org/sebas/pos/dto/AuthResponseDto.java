@@ -4,5 +4,7 @@ import lombok.Data;
 
 @Data
 public class AuthResponseDto {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
+    private String tokenType = "Bearer";
 }
