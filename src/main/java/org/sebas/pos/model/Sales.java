@@ -2,7 +2,6 @@ package org.sebas.pos.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +26,12 @@ public class Sales {
     private Long id;
 
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
     @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private PAYMENT payment_type;
 
     @Setter
@@ -37,13 +39,12 @@ public class Sales {
     @JsonManagedReference
     private List<SaleItem> productsList = new ArrayList<>();
 
-
     @Setter
-    @NotNull(message = "Total price cannot be null")
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
     @Setter
-    @NotNull(message = "Total products cannot be null")
+    @Column(nullable = false)
     private Integer totalProducts;
 
     @Setter

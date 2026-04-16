@@ -1,13 +1,14 @@
 package org.sebas.pos.service;
 
-import org.sebas.pos.dto.AuthResponseDto;
-import org.sebas.pos.dto.LoginDto;
-import org.sebas.pos.dto.RefreshTokenDto;
+import org.sebas.pos.dto.*;
 import org.sebas.pos.exception.BadRequestException;
+import org.sebas.pos.mapper.UserMapper;
 import org.sebas.pos.model.RefreshToken;
 import org.sebas.pos.model.Users;
 import org.sebas.pos.repo.RefreshTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,8 @@ public class AuthService {
 
     @Autowired
     private RefreshTokenRepo refreshTokenRepo;
+    @Autowired
+    private UserMapper userMapper;
 
     public AuthResponseDto loginUser(LoginDto loginDto){
         // 1. Authenticate credentials
@@ -106,4 +109,10 @@ public class AuthService {
 
 
     }
+
+    public UserDto register(UserDto registerDto) {
+        Users newUser = userService.createUser(registerDto);
+        return userMapper.toUserDto(newUser);
+    }
+
 }

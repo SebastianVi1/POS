@@ -1,8 +1,6 @@
 package org.sebas.pos.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,21 +17,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
     @Setter
-    @NotNull(message = "Product name cannot be null")
-    @NotBlank(message = "Product name cannot be blank")
+    @Column(nullable = false)
     private String productName;
 
     @Setter
     private String barcode;
 
     @Setter
-    @NotNull(message = "Product price cannot be null")
-    @NotBlank(message = "Product price cannot be blank")
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Setter
+    @Column(nullable = false)
     private Integer stock = 0;
 
     @Setter

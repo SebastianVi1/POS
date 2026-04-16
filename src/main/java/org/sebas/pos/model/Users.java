@@ -13,13 +13,18 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @Setter
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Setter
+    @Column(nullable = false)
     private String password;
 
-    @Setter @Enumerated(EnumType.STRING)
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ROLE role;
 
 }
