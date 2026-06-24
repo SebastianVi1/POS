@@ -21,7 +21,7 @@ public class Init implements CommandLineRunner {
                     .username("sebas")
                     .password("123sebass")
             .build();
-        Users finalUser = userService.createUser(userDto);
+        Users finalUser = userService.createUserCashier(userDto);
         System.out.println("Admin user registred consult dev for access");
 
     }

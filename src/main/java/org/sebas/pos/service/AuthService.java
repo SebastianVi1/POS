@@ -7,8 +7,6 @@ import org.sebas.pos.model.RefreshToken;
 import org.sebas.pos.model.Users;
 import org.sebas.pos.repo.RefreshTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -111,7 +109,7 @@ public class AuthService {
     }
 
     public UserDto register(UserDto registerDto) {
-        Users newUser = userService.createUser(registerDto);
+        Users newUser = userService.createUserCashier(registerDto);
         return userMapper.toUserDto(newUser);
     }
 
