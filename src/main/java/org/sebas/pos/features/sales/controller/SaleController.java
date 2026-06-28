@@ -1,0 +1,37 @@
+package org.sebas.pos.features.sales.controller;
+
+import org.sebas.pos.features.sales.service.SaleService;
+import org.sebas.pos.features.sales.domain.SaleItem;
+import org.sebas.pos.features.sales.domain.Sales;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/sales")
+public class SaleController {
+    @Autowired
+    private SaleService saleService;
+
+    @PostMapping()
+    public ResponseEntity<Sales> makeSale(@RequestBody List<SaleItem> products){
+        Sales sale = saleService.makeSale(products);
+        System.out.println(products);
+        return new ResponseEntity<>(sale, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getSalesHistory() {
+        List<Sales> sales = saleService.getSalesHistory();
+        return new ResponseEntity<>(sales, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSaleTicket(@PathVariable Long id){
+        Sales sale = saleService.getSaleTicket(id);
+        return new ResponseEntity<Sales>(sale, HttpStatus.OK);
+    }
+}

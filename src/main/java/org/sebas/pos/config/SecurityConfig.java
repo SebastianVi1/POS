@@ -1,6 +1,6 @@
 package org.sebas.pos.config;
 
-import org.sebas.pos.service.MyUserDetailsService;
+import org.sebas.pos.features.user.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

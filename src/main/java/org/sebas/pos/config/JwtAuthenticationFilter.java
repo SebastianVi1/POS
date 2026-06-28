@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.sebas.pos.service.JwtTokenProviderService;
+import org.sebas.pos.features.auth.service.JwtTokenProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenProviderService jwtTokenProviderService;
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
     //This method is executed for eveny request intercepted by the filter

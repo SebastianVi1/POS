@@ -1,0 +1,94 @@
+package org.sebas.pos.features.product.service;
+
+import org.sebas.pos.features.product.dto.ProductDto;
+import org.sebas.pos.common.exception.BadRequestException;
+import org.sebas.pos.common.exception.ResourceAlreadyExistsException;
+import org.sebas.pos.common.exception.ResourceNotFoundException;
+import org.sebas.pos.features.product.mapper.ProductMapper;
+import org.sebas.pos.features.product.repo.ProductRepo;
+import org.sebas.pos.features.product.domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class ProductService {
+    private final ProductRepo productRepo;
+    private final ProductMapper productMapper;
+
+    @Autowired
+    public ProductService(ProductRepo productRepo, ProductMapper productMapper) {
+        this.productRepo = productRepo;
+        this.productMapper = productMapper;
+    }
+
+    public ProductDto createProduct(ProductDto dto) {
+        if (dto == null) {
+            throw new BadRequestException("Product must not be null");
+        }
+        Product product = productMapper.toProduct(dto);
+        if (product.getProductName() == null || product.getProductName().isBlank()) {
+            throw new BadRequestException("Product name is required");
+        }
+        if (product.getPrice() == null) {
+            throw new BadRequestException("Product price is required");
+        }
+        if (product.getPrice().signum() < 0) {
+            throw new BadRequestException("Product price must be >= 0");
+        }
+        // check duplicate by name
+        Product existing = productRepo.findProductByProductName(product.getProductName());
+        if (existing != null) {
+            throw new ResourceAlreadyExistsException("Product with name '" + product.getProductName() + "' already exists");
+        }
+
+        return productMapper.toDto(productRepo.save(product));
+    }
+
+    public void deleteProduct(UUID id) {
+        Optional<Product> found = productRepo.findById(id);
+        if (found.isEmpty()) {
+            throw new ResourceNotFoundException("Product with id '" + id + "' not found");
+        }
+        productRepo.deleteById(id);
+    }
+
+    public ProductDto updateProduct(UUID id, ProductDto newProduct) {
+        Optional<Product> productOptional = productRepo.findById(id);
+        if (productOptional.isEmpty()) {
+            throw new ResourceNotFoundException("Product with id '" + id + "' not found");
+        }
+
+        Product product = productOptional.get();
+
+        product.setPrice(newProduct.getPrice());
+        product.setProductName(newProduct.getProductName());
+        product.setBarcode(newProduct.getBarcode());
+        product.setStock(newProduct.getStock());
+        product.setMinStock(newProduct.getMinStock());
+        var finalProduct = productRepo.save(product);
+
+        return productMapper.toDto(finalProduct);
+    }
+
+    public Product updateEasyProduct(Product product){
+         return productRepo.save(product);
+    }
+
+    public ProductDto findProductById(UUID id) {
+        return productMapper.toDto(findEntityById(id));
+    }
+    // Internal use
+    public Product findEntityById(UUID id ){
+        return productRepo.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Product not found"));
+    }
+
+    public List<ProductDto> getAllProducts(){
+        return productRepo.findAll().stream().map(productMapper::toDto).toList();
+    }
+
+}
